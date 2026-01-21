@@ -1,3 +1,3 @@
 # whiteboard_app
 
-A new Flutter project.
+A minimalist whiteboard app
