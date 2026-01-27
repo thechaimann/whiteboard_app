@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whiteboard/whiteboard.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +15,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late WhiteBoardController man;
+  bool EraseMode = false;
 
   @override
   void initState() {
@@ -36,7 +38,8 @@ class _MyAppState extends State<MyApp> {
               backgroundColor: Colors.white,
               strokeColor: Colors.black,
               strokeWidth: 4.0,
-            ),
+              isErasing: EraseMode,
+            ),  
 
             // Floating button
             Positioned( //clear button
@@ -47,6 +50,17 @@ class _MyAppState extends State<MyApp> {
                 backgroundColor: Colors.cyan,
                 foregroundColor: Colors.white,
                 child: const Icon(Icons.clear),
+              ),
+            ),
+
+            Positioned( //zoom in
+              bottom: 88,
+              right: 16,
+              child: FloatingActionButton(
+                onPressed: () => man.clear(),
+                backgroundColor: Colors.cyan,
+                foregroundColor: Colors.white,
+                child: const Icon(Icons.zoom_in),
               ),
             ),
 
@@ -61,14 +75,16 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
 
-            Positioned( //Undo Button
+            Positioned( //Eraser Button
               bottom: 88,
               left: 16,
               child: FloatingActionButton(
-                onPressed: () => man.undo(),
+                onPressed: () => setState(() {
+                  EraseMode = !EraseMode;
+                }),
                 backgroundColor: Colors.cyan,
                 foregroundColor: Colors.white,
-                child: const Icon(Icons.undo),
+                child: const Icon(FontAwesomeIcons.eraser),
               ),
             ),
           ],
