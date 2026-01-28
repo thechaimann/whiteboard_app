@@ -7,7 +7,7 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -15,7 +15,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late WhiteBoardController man;
-  bool EraseMode = false;
+  bool eraseMode = false;
+  double penSize = 4.0;
 
   @override
   void initState() {
@@ -37,8 +38,8 @@ class _MyAppState extends State<MyApp> {
               controller: man,
               backgroundColor: Colors.white,
               strokeColor: Colors.black,
-              strokeWidth: 4.0,
-              isErasing: EraseMode,
+              strokeWidth: penSize,
+              isErasing: eraseMode,
             ),  
 
             // Floating button
@@ -53,14 +54,14 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
 
-            Positioned( //zoom in
+            Positioned( //Save button
               bottom: 88,
               right: 16,
               child: FloatingActionButton(
-                onPressed: () => man.clear(),
+                onPressed: () => man.convertToImage(),
                 backgroundColor: Colors.cyan,
                 foregroundColor: Colors.white,
-                child: const Icon(Icons.zoom_in),
+                child: const Icon(Icons.save),
               ),
             ),
 
@@ -80,11 +81,39 @@ class _MyAppState extends State<MyApp> {
               left: 16,
               child: FloatingActionButton(
                 onPressed: () => setState(() {
-                  EraseMode = !EraseMode;
+                  eraseMode = !eraseMode;
                 }),
                 backgroundColor: Colors.cyan,
                 foregroundColor: Colors.white,
                 child: const Icon(FontAwesomeIcons.eraser),
+              ),
+            ),
+          
+            Positioned( //slider
+              top: 40,
+              left: 16,
+              right: 16,
+              child: SizedBox(
+                width: 20,
+                child: SliderTheme
+                (
+                  data: SliderThemeData(
+                    thumbColor: Colors.cyan,
+                    activeTrackColor: Colors.cyan,
+                    inactiveTrackColor: Colors.cyan.withOpacity(0.3),
+                  ),
+                  child: Slider(
+                    value: penSize,
+                    min: 1.0,
+                    max: 50.0,
+                    divisions: 40,
+                    onChanged: (size) {
+                      setState(() {
+                        penSize = size;
+                      });
+                    },
+                  )
+                ),
               ),
             ),
           ],
