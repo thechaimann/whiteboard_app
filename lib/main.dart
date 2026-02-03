@@ -90,7 +90,7 @@ class _MyAppState extends State<MyApp> {
             ),
           
             Positioned( //slider
-              top: 40,
+              top: 10,
               left: 16,
               right: 16,
               child: SizedBox(
